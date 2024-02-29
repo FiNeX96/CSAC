@@ -124,7 +124,7 @@ int main(void) {
   // count the rest
   recurse(1,0);
   // report
-  for(int i = 0;i <= max_n;i++) {
+  for(int i = ;i <= max_n;i++) {
     if(i > 0)
       count[i] += count[i - 1];
     printf("%2d %lu\n",i,count[i]);
