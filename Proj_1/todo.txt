@@ -1,0 +1,44 @@
+Proj1:
+ - Alterar função dos tempos de execução
+
+---
+
+Free +1 nota final:
+conjuntos representados por mmascaras de bits tipo:
+1, 3, 5, 12: [100000010101]
+
+depois faço shifts e or para saber se a soma já apareceu ou não
+
+first to try é shift que ignora o que está para trás (direita)
+
+objetivo: chegar a 100 (provavelmente em C)
+
+problema: o máx num é 64 pq só tem 64 bits
+num casos: n**(n/2)
+[    n/3    |          |    n/3    ]
+n-1        2n/3                    0
+
+
+
+
+
+
+
+
+---
+
+gnuplot:
+
+set grid
+set logscale y
+
+plot "x1" u 1:3 with points pointtype 7
+OU
+plot "x1" u 1:3 w p pt 7
+
+f(x)=a*x*b**x
+fit f(x) "t" u 1:3 via a,b
+
+# a fica 1.8, b fica 1.374
+
+plot "fx" u 1:3 w p pt 7
