@@ -92,7 +92,7 @@
 #include "elapsed_time.h"
 
 #ifndef max_n
-# define max_n 40
+#define max_n 40
 #endif
 
 static int a[max_n];                   // the set elements
@@ -100,34 +100,50 @@ static int sum_count[2 * max_n + 1];   // the number of times a_i+a_j has been o
 static unsigned long count[1 + max_n]; // the number of subsets (indexed by its last element)
 
 static void recurse(int first_to_try,int set_size) {
+
   // try all ways to append one number to the current set
   for(;first_to_try <= max_n;first_to_try++)
+
     if(sum_count[first_to_try] == 0) {
       // count it
       count[first_to_try]++;
+
       // update the set elements
       a[set_size] = first_to_try;
+
       // count new sums
       for(int i = 0;i <= set_size;i++)
         sum_count[a[i] + first_to_try]++;
+
       // try one more
       recurse(first_to_try + 1,set_size + 1);
+
       // uncount sums
       for(int i = 0;i <= set_size;i++)
         sum_count[a[i] + first_to_try]--;
+
     }
+
 }
 
 int main(void) {
+
   // count the empty set
   count[0] = 1ul;
+
   // count the rest
   recurse(1,0);
+
   // report
   for(int i = 0;i <= max_n;i++) {
+    
     if(i > 0)
       count[i] += count[i - 1];
+
     printf("%2d %lu\n",i,count[i]);
+  
   }
+
   printf("# %2d %.5e seconds\n",max_n,cpu_time());
+
 }

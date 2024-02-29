@@ -20,12 +20,13 @@
 
 #include <time.h>
 
-double cpu_time(void)
-{
+double cpu_time(void) {
+
   struct timespec current_time;
 
   if(clock_gettime(CLOCK_PROCESS_CPUTIME_ID,&current_time) != 0)  // the first argument could also be CLOCK_REALTIME
     return -1.0; // clock_gettime() failed!!!
+
   return (double)current_time.tv_sec + 1.0e-9 * (double)current_time.tv_nsec;
 }
 
