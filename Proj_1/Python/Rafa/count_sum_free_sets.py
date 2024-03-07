@@ -25,15 +25,15 @@ def main():
     total_time = end_time - start_time
     # print the result
     for i in range(0, temp_max+1):
-        # if i>0:
-            # count[i] += count[i-1]
-        print(f"# {i} {count[i]}")
+        if i>0:
+            count[i] += count[i-1]
+        # print(f"# {i} {count[i]}")
     # Print to file
     # with open("count_sum_free_sets.txt", "a+") as file:
     #     file.write(f"{temp_max} {count[temp_max]} {total_time:e} seconds\n")
     # Print to console
-    # print(f"{temp_max} {count[i]} {total_time:e} seconds\n")
-    print("\n\n")
+    print(f"{temp_max} {count[i]} {total_time:e} seconds")
+    # print("\n\n")
 
 def recurse(first_try: int, set_size: int):
     while first_try <= temp_max:
