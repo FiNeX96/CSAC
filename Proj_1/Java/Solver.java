@@ -1,7 +1,5 @@
 package Java;
 
-import java.lang.Double;
-
 public class Solver {
     static void recursive(int first_to_try, int set_size, State_t state) {
 
@@ -23,7 +21,6 @@ public class Solver {
                 // uncount sums
                 for(int i = 0;i <= set_size;i++)
                 state.sum_count[state.a[i] + first_to_try]--;
-    
             }
         }
     }
@@ -41,7 +38,7 @@ public class Solver {
         //  Print the result
         for (int i = 0; i <= globals.temp_n; i++) {
             if (i>0) {
-            state.count[i] += state.count[i-1];
+                state.count[i] += state.count[i-1];
             }
         }
     
