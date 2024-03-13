@@ -25,10 +25,10 @@
 //
 
 #ifndef max_n
-# define max_n           60
+# define max_n           40
 #endif
 #ifndef n_threads
-# define n_threads        16
+# define n_threads        2
 #endif
 #ifndef split_n
 # define split_n          8
