@@ -26,8 +26,6 @@ recursive() {
             for ((j=0; j<=set_size; j++)); do
                 ((sum_count[first_try + a[j]]--))
             done
-        else
-            printf "skipped %d |\n" "$temp_max"
         fi
 
         # update vars
