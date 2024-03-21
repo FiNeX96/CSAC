@@ -6,147 +6,76 @@
 // in this very simple program we count the number of subsets of { 1,2,...,n } that are sum-free
 //   this is sequence A007865 of the OEIS (https://oeis.org/A007865)
 //
-// version 1 plain --- no parallelization harness
+// version 2 --- with bit tricks, cannot break the 64-bit barrie
 //
 
 #include <stdio.h>
-#include <string.h> 
-#include <time.h>
-#include <stdbool.h> 
-
-
-//
-// program configuration
-//
+#include "elapsed_time.h"
 
 #ifndef max_n
-# define max_n 40
+# define max_n 50
 #endif
 
-int temp_n = 0;
+static unsigned long count[1 + max_n]; // the number of subsets (indexed by its last element)
 
-//
-// global computation state
-//
+#if defined(__x86_64__)
 
-//  This will always make the size of these structures occupy a lot of uneeded space for small n
-typedef struct
+static int first_non_zero_bit(unsigned long mask)
 {
-  int a[max_n];                   // the set elements
-  unsigned long count[1 + max_n]; // the number of subsets (indexed by its last element)
+  long result;
+
+  asm volatile("tzcntq\t%[data],%[result]"
+    : [result] "=r" (result)
+    : [data]   "r"  (mask)
+    : "cc"
+  );
+  return (int)result;
 }
-state_t;
 
-static state_t state;
+#else
 
-//  Clocks for timing
-struct timespec start, end;
+#define first_non_zero_bit(mask)  (int)__builtin_ctzl((unsigned long)(mask))
 
+#endif
 
-//
-// main recursion
-//
+static void recurse(unsigned long set_mask,unsigned long negated_sum_mask)
+{
+  unsigned long new_set_mask,new_negated_sum_mask;
+  int bit;
 
-static void recursive() {
-
-  //  Generate a full set from 0 to temp_n
-  int fullSet[temp_n];
-  for (int i = 0; i < temp_n; i++) {
-      fullSet[i] = i + 1;
-  }
-
-  //  Generate all the subsets of the initial set 
-  for (int i = 0; i < (1 << temp_n); i++) {
-    int subset[temp_n];
-    int subsetSize = 0;
-
-    for (int j = 0; j < temp_n; j++) {
-        if (i & (1 << j)) {
-            subset[subsetSize++] = fullSet[j];
-        }
-    }
-
-    if (subsetSize < 1) {
-      continue;
-    }
-
-
-    bool canAdd = true;
-
-    // count new sums
-    for(int numIdxToSumInitial = 0; numIdxToSumInitial < subsetSize - 1; numIdxToSumInitial++) {
-
-      for(int numIdxToSumNow = numIdxToSumInitial + 1; numIdxToSumNow < subsetSize; numIdxToSumNow++) {
-
-        for(int numIdxToCheck = 0; numIdxToCheck < subsetSize; numIdxToCheck++) {
-
-        //printf("Checking if %d + %d = %d\n", state.a[numIdxToSumInitial], state.a[numIdxToSumNow], numIdxToCheck);
-
-          if (subset[numIdxToSumInitial] + subset[numIdxToSumNow] ==  subset[numIdxToCheck]) {
-            canAdd = false;
-
-            //  Exit all loops
-            numIdxToSumNow = subsetSize;
-            numIdxToSumInitial = subsetSize;
-            continue;
-          }
-        }
-      }
-    }
-
-    if (canAdd) {
-      // count it
-      //printf("ADDED %d\n", number_to_try);
-      state.count[temp_n]++;
-/*       printf("FINAL {");
-      for(int j = 0; j < subsetSize; j++) {
-          printf(" %d,", subset[j]);
-      }
-      printf("}\n"); */
-    }
+  // try all ways to append one number to the current set
+  while(negated_sum_mask != 0ul)
+  {
+    // get the smallest possible next number
+    bit = first_non_zero_bit(negated_sum_mask);
+    // count it
+    count[1 + bit]++;
+    // get rid of the number
+    negated_sum_mask &= negated_sum_mask - 1ul;
+    // update the set
+    new_set_mask  = set_mask | (1ul << bit);
+    // update the sums
+    new_negated_sum_mask = negated_sum_mask & ~(new_set_mask << (bit + 1));
+    // recurse
+    recurse(new_set_mask,new_negated_sum_mask);
   }
 }
 
-
-
-//
-// main program
-//
-
-void run_solver() {
-  
+int main(void)
+{
   // count the empty set
-  state.count[0] = 1ul;
-
+  count[0] = 1ul;
   // count the rest
-  clock_t start = clock(), diff;
-  recursive();
-  diff = clock() - start;
-
+  start_time_measurement(5);
+  recurse(0ul,(1ul << max_n) - 1ul);
+  time_measurement();
   // report
-  for(int i = 0;i <= temp_n;i++) {
-    if(i > 0) {
-      state.count[i] += state.count[i - 1];
-    }
+  for(int i = 0;i <= max_n;i++)
+  {
+    if(i > 0)
+      count[i] += count[i - 1];
+    printf("%d %lu\n",i,count[i]);
   }
-
-  float sec = ((float)diff * 1000 / CLOCKS_PER_SEC) / 1000;
-
-  printf("# %d %lu %6.3e\n",temp_n,state.count[temp_n],sec);
-}
-
-int main(void) {
-  for(int i = 1;i <= max_n;i++) {
-    memset(state.a, 0, sizeof state.a);
-    memset(state.count, 0, sizeof state.count);
-    temp_n = i;
-    run_solver();
-
-/*     printf("{");
-    for(int j = 0; j < temp_n; j++) {
-        printf(" %d,", state.a[j]);
-    }
-    printf("}\n"); */
-  }
+  printf("# %d %lu %.6f %ld\n",max_n,count[max_n],cpu_time_delta,(long)wall_time_delta);
   return 0;
 }

@@ -32,9 +32,9 @@ gnuplot:
 set grid
 set logscale y
 
-plot "x1" u 1:3 with points pointtype 7
+plot "x1" u 1:2 with points pointtype 7
 OU
-plot "x1" u 1:3 w p pt 7
+plot "x1" u 1:2 w p pt 7
 
 f(x)=a*x*b**x
 fit f(x) "t" u 1:3 via a,b
@@ -42,3 +42,39 @@ fit f(x) "t" u 1:3 via a,b
 # a fica 1.8, b fica 1.374
 
 plot "fx" u 1:3 w p pt 7
+
+
+plot "test_all_ryzen_7_5700U.txt" u 1:3 with points pointtype 7
+replot "amd_ryzen_9_3900x_v1_plain.txt" u 1:3 with points pointtype 7
+replot "amd_ryzen_7_4800hs_v1_plain.txt" u 1:3 with points pointtype 7
+
+
+
+
+para o segundo:
+medir tempos de memória:
+escrever grande array na memoria
+
+
+
+for (i = 0; i < n; i+= 4) {
+    s0 += a[i];
+    s1 += a[i+1];
+    s2 += a[i+2];
+    s3 += a[i+3];
+}
+
+isto depende do tipo de dados
+(char lê 8 bits por ciclo de relógio, int lê 4, long 16)
+
+
+linhas de cache:
+[pointer x bits] [garbage 64-xbits] [pointer x bits] [garbage 64-xbits] [pointer x bits][garbage 64-xbits] etx
+
+cada pointer salta entre localidades ao calhas (garbages)
+
+for (i = 0; i < 1000) {
+    p = *p;
+}
+
+isto vai fazer com que todos os saltos dependam dos anteriores e o cache altera todo

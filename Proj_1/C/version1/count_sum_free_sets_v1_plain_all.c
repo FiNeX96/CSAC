@@ -10,7 +10,9 @@
 //
 
 #include <stdio.h>
-#include "elapsed_time.h"
+#include <string.h> 
+#include <time.h>
+#include <stdbool.h> 
 
 
 //
@@ -18,9 +20,10 @@
 //
 
 #ifndef max_n
-# define max_n 50
+# define max_n 60
 #endif
 
+int temp_n = 0;
 
 //
 // global computation state
@@ -36,6 +39,8 @@ state_t;
 
 static state_t state;
 
+//  Clocks for timing
+struct timespec start, end;
 
 //
 // main recursion
@@ -44,7 +49,7 @@ static state_t state;
 static void recurse(int first_to_try,int set_size)
 {
   // try all ways to append one number to the current set
-  for(;first_to_try <= max_n;first_to_try++)
+  for(;first_to_try <= temp_n;first_to_try++)
     if(state.sum_count[first_to_try] == 0)
     {
       // count it
@@ -67,22 +72,37 @@ static void recurse(int first_to_try,int set_size)
 // main program
 //
 
-int main(void)
+void run_solver()
 {
   // count the empty set
   state.count[0] = 1ul;
   // count the rest
-  start_time_measurement(5);
+  clock_t start = clock(), diff;
   recurse(1,0);
-  time_measurement();
+  diff = clock() - start;
   // report
-  for(int i = 0;i <= max_n;i++)
+  for(int i = 0;i <= temp_n;i++)
   {
     if(i > 0)
       state.count[i] += state.count[i - 1];
-    printf("%d %lu\n",i,state.count[i]);
+    //printf("%d %lu\n",i,state.count[i]);
   }
-  printf("# %d %lu %.6f %ld\n",max_n,state.count[max_n],cpu_time_delta,(long)wall_time_delta);
+  
+  float sec = ((float)diff * 1000 / CLOCKS_PER_SEC) / 1000;
 
-  return 0;
+  printf("%2d %12lu %11.6f %4d\n", temp_n, state.count[temp_n], sec, (int)sec);
+
+}
+
+int main(void)
+{
+  printf("#n        count         cpu wall\n#- ------------ ----------- ----\n");
+
+  for(int j = 0; j <= max_n; j++)
+  {
+    memset(state.a, 0, sizeof state.a);
+    memset(state.count, 0, sizeof state.count);
+    temp_n = j;
+    run_solver();
+  }
 }

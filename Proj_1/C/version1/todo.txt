@@ -1,4 +1,3 @@
 Para um caso rápido (n pequeno) ver se as diferenças são muito visíveis
 
 tempo de acesso à memória, largura de banda, ddr4 vs ddr5 (melhor banda, pior latência)
-
