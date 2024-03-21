@@ -19,8 +19,9 @@ public class Solver {
                 // try one more
                 recursive(first_to_try + 1, set_size + 1, state);
                 // uncount sums
-                for(int i = 0;i <= set_size;i++)
-                state.sum_count[state.a[i] + first_to_try]--;
+                for(int i = 0;i <= set_size;i++) {
+                    state.sum_count[state.a[i] + first_to_try]--;
+                }
             }
         }
     }

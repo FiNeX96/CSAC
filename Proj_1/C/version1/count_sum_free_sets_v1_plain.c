@@ -83,5 +83,10 @@ int main(void)
     printf("%d %lu\n",i,state.count[i]);
   }
   printf("# %d %lu %.6f %ld\n",max_n,state.count[max_n],cpu_time_delta,(long)wall_time_delta);
+    printf("{");
+    for(int j = 0; j < max_n; j++) {
+        printf(" %d,", state.a[j]);
+    }
+    printf("}\n");
   return 0;
 }
