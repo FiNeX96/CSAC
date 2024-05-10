@@ -56,8 +56,10 @@ int main(int argc, char **argv) {
   for (unsigned int b = 0; b < param; b++) {
     pierce(&bigA, b, &c);
 
-    if (c >= biggestC) {
-      printf("a: %d | b: %d | c: %d\n", bigA, b, c);
+    if (c > biggestC) {
+      //printf("a: %d | b: %d | c: %d\n", bigA, b, c);
+
+      printf("       B: %6d    |      C: %04d    |    Hex:  %04X\n", b, c, c & 0xFFFF);
       biggestC = c;
     }
   }
