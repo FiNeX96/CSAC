@@ -313,13 +313,13 @@ int main(int argc, char **argv) {
   printf(" ╭───────────────────────────────────────────────────╮\n");
   printf(" │--------------------- \033[0;36mResults\033[0;37m ---------------------│\n");
   printf(" ├───────────────────────────────────────────────────┤\n");
-  printf(" │ \033[0;32mLargest C value:                            \033[0;33m %4d \033[0;37m│\n", largestC);
-  printf(" │ \033[0;32mLargest value at B:                      \033[0;33m %7d \033[0;37m│\n", largestB);
-  printf(" │ \033[0;32mTime used:                              \033[0;33m %7lds \033[0;37m│\n", (toc - tic));
+  printf(" │ \033[0;32mLargest C value:   \033[0;33m                          %4d \033[0;37m│\n", largestC);
+  printf(" │ \033[0;32mLargest value at B:\033[0;33m                       %7d \033[0;37m│\n", largestB);
+  printf(" │ \033[0;32mTime used:         \033[0;33m                      %7lds \033[0;37m│\n", (toc - tic));
   printf(" ├───────────────────────────────────────────────────┤\n");
-  printf(" │ \033[0;32mNumber of Iterations:           \033[0;33m %5d iterations \033[0;37m│\n", iter);
-  printf(" │ \033[0;32mNumber of Threads/Iteration:        \033[0;33m %4d threads \033[0;37m│\n", (int)thread_count);
-  printf(" │ \033[0;32mNumber of Total Threads used:\033[0;33m     %7d threads \033[0;37m│\n", iter * (int)thread_count);
+  printf(" │ \033[0;32mNumber of Iterations:         \033[0;33m   %5d iterations \033[0;37m│\n", iter);
+  printf(" │ \033[0;32mNumber of Threads/Iteration:  \033[0;33m       %4d threads \033[0;37m│\n", (int)thread_count);
+  printf(" │ \033[0;32mNumber of Total Threads used: \033[0;33m    %7d threads \033[0;37m│\n", iter * (int)thread_count);
   printf(" ╰───────────────────────────────────────────────────╯\n");
 
   //
