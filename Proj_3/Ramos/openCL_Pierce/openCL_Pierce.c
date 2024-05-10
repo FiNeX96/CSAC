@@ -9,6 +9,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #define CL_USE_DEPRECATED_OPENCL_1_2_APIS  // for the clCreateCommandQueue function
 #include <CL/cl.h>
 
@@ -211,7 +212,6 @@ int main(int argc, char **argv) {
 
   size_t thread_count;
   cl_call( clGetDeviceInfo , (device_id[0],CL_DEVICE_MAX_WORK_GROUP_SIZE,sizeof(thread_count),(void *)&thread_count,NULL) );
-  printf("  max local threads ......... %u\n",(unsigned int)thread_count);
 
   int maxIter = (maxB / thread_count) + 1;
 
@@ -253,9 +253,26 @@ int main(int argc, char **argv) {
   // as we will be launching a single kernel, there is no need to specify the events this kernel has to wait for
   //
   unsigned int iter = 0;
+  unsigned int largestB = 0;
   unsigned int largestC = 0;
 
-  printf(" +------------------- Buffer Values -----------------+\n");
+  printf(" ╭───────────────────────────────────────────────────╮\n");
+  printf(" │------------ Pierce Expansion Algorithm -----------│\n");
+  printf(" ├───────────────────────────────────────────────────┤\n");
+  printf(" │  This code calculates the Pierce Expansion count  │\n");
+  printf(" │ for a given B value.                              │\n");
+  printf(" │  The B value is the same as the thread index on   │\n");
+  printf(" │ the table bellow.                                 │\n");
+  printf(" ╰───────────────────────────────────────────────────╯\n");
+
+  printf(" ╭───────────────────────────────────────────────────╮\n");
+  printf(" │------------ Largest Values Calculated ------------│\n");
+  printf(" ├──────────────────┬───────────────┬────────────────┤\n");
+  printf(" │   Thread Index   │ Largest c Val │ Hex of the val │\n");
+  printf(" ├──────────────────┼───────────────┼────────────────┤\n");
+  
+  clock_t tic = clock();
+
   for (; iter < maxIter; iter++) {
     size_t total_work_size[1],local_work_size[1]; // number of threads
     cl_event pierce_kernel_done[1];
@@ -282,13 +299,27 @@ int main(int argc, char **argv) {
 
       if (host_buffer[i] > largestC && currThread < maxB) {
         largestC = host_buffer[i];
-        printf("  Thread: %6d    |    Val: %4d    |    Hex:  %04X\n", currThread, host_buffer[i], host_buffer[i] & 0xFFFF);
+        largestB = currThread;
+        printf(" │ Thread: %7d  │ Value: %5d  │ Hex:     %04X  │\n", currThread, host_buffer[i], host_buffer[i] & 0xFFFF);
       }
 
     }
   }
 
-  printf(" +--- Number of Iterations: %3d with %4d threads ---+\n", iter, (int)thread_count);
+  clock_t toc = clock();
+
+  printf(" ╰──────────────────┴───────────────┴────────────────╯\n");
+  printf(" ╭───────────────────────────────────────────────────╮\n");
+  printf(" │--------------------- Results ---------------------│\n");
+  printf(" ├───────────────────────────────────────────────────┤\n");
+  printf(" │   Largest C value:                         %4d   │\n", largestC);
+  printf(" │   Largest value at B:                   %7d   │\n", largestB);
+  printf(" │   Time used:                           %7.2fs   │\n", (double)(toc - tic) * 100 / CLOCKS_PER_SEC);
+  printf(" ├───────────────────────────────────────────────────┤\n");
+  printf(" │   Number of Iterations:        %5d iterations   │\n", iter);
+  printf(" │   Number of Threads/Iteration:     %4d threads   │\n", (int)thread_count);
+  printf(" │   Number of Total Threads used: %7d threads   │\n", iter * (int)thread_count);
+  printf(" ╰───────────────────────────────────────────────────╯\n");
 
   //
   // clean up (optional)

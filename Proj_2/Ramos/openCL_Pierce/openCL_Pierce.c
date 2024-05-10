@@ -211,7 +211,6 @@ int main(int argc, char **argv) {
 
   size_t thread_count;
   cl_call( clGetDeviceInfo , (device_id[0],CL_DEVICE_MAX_WORK_GROUP_SIZE,sizeof(thread_count),(void *)&thread_count,NULL) );
-  printf("  max local threads ......... %u\n",(unsigned int)thread_count);
 
   int maxIter = (maxB / thread_count) + 1;
 
@@ -255,7 +254,10 @@ int main(int argc, char **argv) {
   unsigned int iter = 0;
   unsigned int largestC = 0;
 
-  printf(" +------------------- Buffer Values -----------------+\n");
+  printf(" ╭───────────────────────────────────────────────────╮\n");
+  printf(" │------------------ Buffer Values ------------------│\n");
+
+  printf(" ├──────────────────────────────────────────────────┤\n");
   for (; iter < maxIter; iter++) {
     size_t total_work_size[1],local_work_size[1]; // number of threads
     cl_event pierce_kernel_done[1];
@@ -282,13 +284,15 @@ int main(int argc, char **argv) {
 
       if (host_buffer[i] > largestC && currThread < maxB) {
         largestC = host_buffer[i];
-        printf("  Thread: %6d    |    Val: %4d    |    Hex:  %04X\n", currThread, host_buffer[i], host_buffer[i] & 0xFFFF);
+        printf(" │ Thread: %6d    │    Val: %4d    │    Hex:  %04X │\n", currThread, host_buffer[i], host_buffer[i] & 0xFFFF);
       }
 
     }
   }
-
-  printf(" +--- Number of Iterations: %3d with %4d threads ---+\n", iter, (int)thread_count);
+  printf(" ╰──────────────────────────────────────────────────╯\n");
+  printf(" ╭──────────────────────────────────────────────────╮\n");
+  printf(" │   Number of Iterations: %3d with %4d threads    │\n", iter, (int)thread_count);
+  printf(" ╰──────────────────────────────────────────────────╯\n");
 
   //
   // clean up (optional)
