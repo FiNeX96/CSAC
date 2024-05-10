@@ -15,10 +15,10 @@ void pierce(__global char *buffer, int buffer_size, unsigned int iter, unsigned 
   if(idx >= (size_t)0 && idx < (size_t)buffer_size) {
 
     //  The a, c, and temporary c variables
-    unsigned int a, c, tempC;
+    unsigned int a, tempC;
 
     //  Initialize the final biggest c found
-    char bigC = 0;
+    char c, bigC = 0;
 
     //  Calculate the current b, which is the current iteration times
     // the thread count of each iteration plus this thread's index

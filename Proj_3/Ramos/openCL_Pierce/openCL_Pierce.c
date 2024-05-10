@@ -256,19 +256,20 @@ int main(int argc, char **argv) {
   unsigned int largestB = 0;
   unsigned int largestC = 0;
 
+  printf("\033[0;37m\n");
   printf(" ╭───────────────────────────────────────────────────╮\n");
-  printf(" │------------ Pierce Expansion Algorithm -----------│\n");
+  printf(" │------------ \033[0;36mPierce Expansion Algorithm\033[0;37m -----------│\n");
   printf(" ├───────────────────────────────────────────────────┤\n");
-  printf(" │  This code calculates the Pierce Expansion count  │\n");
-  printf(" │ for a given B value.                              │\n");
-  printf(" │  The B value is the same as the thread index on   │\n");
-  printf(" │ the table bellow.                                 │\n");
+  printf(" │ \033[0;35m This code calculates the Pierce Expansion count \033[0;37m │\n");
+  printf(" │ \033[0;35mfor a given B value.                             \033[0;37m │\n");
+  printf(" │ \033[0;35m The B value is the same as the thread index on  \033[0;37m │\n");
+  printf(" │ \033[0;35mthe table bellow.                                \033[0;37m │\n");
   printf(" ╰───────────────────────────────────────────────────╯\n");
 
   printf(" ╭───────────────────────────────────────────────────╮\n");
-  printf(" │------------ Largest Values Calculated ------------│\n");
+  printf(" │------------ \033[0;36mLargest Values Calculated\033[0;37m ------------│\n");
   printf(" ├──────────────────┬───────────────┬────────────────┤\n");
-  printf(" │   Thread Index   │ Largest c Val │ Hex of the val │\n");
+  printf(" │ \033[0;32mThread Index (b)\033[0;37m │ \033[0;32mLargest c Val\033[0;37m │ \033[0;32mHex of the val\033[0;37m │\n");
   printf(" ├──────────────────┼───────────────┼────────────────┤\n");
   
   time_t tic = time(NULL);
@@ -300,7 +301,7 @@ int main(int argc, char **argv) {
       if (host_buffer[i] > largestC && currThread < maxB) {
         largestC = host_buffer[i];
         largestB = currThread;
-        printf(" │ Thread: %7d  │ Value: %5d  │ Hex:     %04X  │\n", currThread, host_buffer[i], host_buffer[i] & 0xFFFF);
+        printf(" │ \033[0;32mThread:\033[0;33m %8d\033[0;37m │ \033[0;32mValue:\033[0;33m %6d\033[0;37m │ \033[0;32mHex:\033[0;33m      %04X \033[0;37m│\n", currThread, host_buffer[i], host_buffer[i] & 0xFFFF);
       }
 
     }
@@ -310,15 +311,15 @@ int main(int argc, char **argv) {
 
   printf(" ╰──────────────────┴───────────────┴────────────────╯\n");
   printf(" ╭───────────────────────────────────────────────────╮\n");
-  printf(" │--------------------- Results ---------------------│\n");
+  printf(" │--------------------- \033[0;36mResults\033[0;37m ---------------------│\n");
   printf(" ├───────────────────────────────────────────────────┤\n");
-  printf(" │   Largest C value:                         %4d   │\n", largestC);
-  printf(" │   Largest value at B:                   %7d   │\n", largestB);
-  printf(" │   Time used:                           %7lds   │\n", (toc - tic));
+  printf(" │ \033[0;32mLargest C value:                            \033[0;33m %4d \033[0;37m│\n", largestC);
+  printf(" │ \033[0;32mLargest value at B:                      \033[0;33m %7d \033[0;37m│\n", largestB);
+  printf(" │ \033[0;32mTime used:                              \033[0;33m %7lds \033[0;37m│\n", (toc - tic));
   printf(" ├───────────────────────────────────────────────────┤\n");
-  printf(" │   Number of Iterations:        %5d iterations   │\n", iter);
-  printf(" │   Number of Threads/Iteration:     %4d threads   │\n", (int)thread_count);
-  printf(" │   Number of Total Threads used: %7d threads   │\n", iter * (int)thread_count);
+  printf(" │ \033[0;32mNumber of Iterations:           \033[0;33m %5d iterations \033[0;37m│\n", iter);
+  printf(" │ \033[0;32mNumber of Threads/Iteration:        \033[0;33m %4d threads \033[0;37m│\n", (int)thread_count);
+  printf(" │ \033[0;32mNumber of Total Threads used:\033[0;33m     %7d threads \033[0;37m│\n", iter * (int)thread_count);
   printf(" ╰───────────────────────────────────────────────────╯\n");
 
   //
