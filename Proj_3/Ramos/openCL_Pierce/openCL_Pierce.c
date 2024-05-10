@@ -271,7 +271,7 @@ int main(int argc, char **argv) {
   printf(" │   Thread Index   │ Largest c Val │ Hex of the val │\n");
   printf(" ├──────────────────┼───────────────┼────────────────┤\n");
   
-  clock_t tic = clock();
+  time_t tic = time(NULL);
 
   for (; iter < maxIter; iter++) {
     size_t total_work_size[1],local_work_size[1]; // number of threads
@@ -306,7 +306,7 @@ int main(int argc, char **argv) {
     }
   }
 
-  clock_t toc = clock();
+  time_t toc = time(NULL);
 
   printf(" ╰──────────────────┴───────────────┴────────────────╯\n");
   printf(" ╭───────────────────────────────────────────────────╮\n");
@@ -314,7 +314,7 @@ int main(int argc, char **argv) {
   printf(" ├───────────────────────────────────────────────────┤\n");
   printf(" │   Largest C value:                         %4d   │\n", largestC);
   printf(" │   Largest value at B:                   %7d   │\n", largestB);
-  printf(" │   Time used:                           %7.2fs   │\n", (double)(toc - tic) * 100 / CLOCKS_PER_SEC);
+  printf(" │   Time used:                           %7lds   │\n", (toc - tic));
   printf(" ├───────────────────────────────────────────────────┤\n");
   printf(" │   Number of Iterations:        %5d iterations   │\n", iter);
   printf(" │   Number of Threads/Iteration:     %4d threads   │\n", (int)thread_count);

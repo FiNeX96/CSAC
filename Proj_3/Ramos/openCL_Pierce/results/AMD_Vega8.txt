@@ -96,7 +96,7 @@
  ├───────────────────────────────────────────────────┤
  │   Largest C value:                           42   │
  │   Largest value at B:                    493919   │
- │   Time used:                            276.82s   │
+ │   Time used:                              1020s   │
  ├───────────────────────────────────────────────────┤
  │   Number of Iterations:         1954 iterations   │
  │   Number of Threads/Iteration:      256 threads   │
