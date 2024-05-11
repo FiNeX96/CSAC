@@ -269,10 +269,12 @@ int main(int argc, char **argv) {
   printf(" ╭───────────────────────────────────────────────────╮\n");
   printf(" │------------ \033[0;36mLargest Values Calculated\033[0;37m ------------│\n");
   printf(" ├──────────────────┬───────────────┬────────────────┤\n");
-  printf(" │ \033[0;32mThread Index (b)\033[0;37m │ \033[0;32mLargest c Val\033[0;37m │ \033[0;32mHex of the val\033[0;37m │\n");
+  printf(" │ \033[0;32mThread Index (b)\033[0;37m │ \033[0;32mLargest c Val\033[0;37m │  \033[0;32mTime to find\033[0;37m  │\n");
   printf(" ├──────────────────┼───────────────┼────────────────┤\n");
   
-  time_t tic = time(NULL);
+  long int totaltime = 0, diff = 0;
+  time_t tic, toc;
+  tic = time(NULL);
 
   for (; iter < maxIter; iter++) {
     size_t total_work_size[1],local_work_size[1]; // number of threads
@@ -301,13 +303,19 @@ int main(int argc, char **argv) {
       if (host_buffer[i] > largestC && currThread < maxB) {
         largestC = host_buffer[i];
         largestB = currThread;
-        printf(" │ \033[0;32mThread:\033[0;33m %8d\033[0;37m │ \033[0;32mValue:\033[0;33m %6d\033[0;37m │ \033[0;32mHex:\033[0;33m      %04X \033[0;37m│\n", currThread, host_buffer[i], host_buffer[i] & 0xFFFF);
+        toc = time(NULL);
+        diff = (toc - tic);
+        totaltime += diff;
+        printf(" │ \033[0;32mThread:\033[0;33m %8d\033[0;37m │ \033[0;32mValue:\033[0;33m %6d\033[0;37m │ \033[0;32mTime:\033[0;33m %7ds \033[0;37m│\n", currThread, host_buffer[i], diff);
+        tic = toc;
       }
 
     }
   }
 
-  time_t toc = time(NULL);
+  toc = time(NULL);
+  diff = (toc - tic);
+  totaltime += diff;
 
   printf(" ╰──────────────────┴───────────────┴────────────────╯\n");
   printf(" ╭───────────────────────────────────────────────────╮\n");
@@ -315,12 +323,12 @@ int main(int argc, char **argv) {
   printf(" ├───────────────────────────────────────────────────┤\n");
   printf(" │ \033[0;32mLargest C value:   \033[0;33m                          %4d \033[0;37m│\n", largestC);
   printf(" │ \033[0;32mLargest value at B:\033[0;33m                       %7d \033[0;37m│\n", largestB);
-  printf(" │ \033[0;32mTime used:         \033[0;33m                      %7lds \033[0;37m│\n", (toc - tic));
+  printf(" │ \033[0;32mTime used:         \033[0;33m                      %7lds \033[0;37m│\n", totaltime);
   printf(" ├───────────────────────────────────────────────────┤\n");
   printf(" │ \033[0;32mNumber of Iterations:         \033[0;33m   %5d iterations \033[0;37m│\n", iter);
   printf(" │ \033[0;32mNumber of Threads/Iteration:  \033[0;33m       %4d threads \033[0;37m│\n", (int)thread_count);
   printf(" │ \033[0;32mNumber of Total Threads used: \033[0;33m    %7d threads \033[0;37m│\n", iter * (int)thread_count);
-  printf(" ╰───────────────────────────────────────────────────╯\n");
+  printf(" ╰───────────────────────────────────────────────────╯\n\n");
 
   //
   // clean up (optional)
