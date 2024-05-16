@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MAX_N=25
+MAX_N=35
 a=()
 sum_count=()
 count=()

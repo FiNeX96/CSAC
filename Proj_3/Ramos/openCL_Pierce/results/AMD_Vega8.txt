@@ -1,0 +1,105 @@
+   maxB | time
+      1 |    0
+     10 |    0
+    100 |    0
+   1000 |    0
+  10000 |    1
+ 100000 |   33
+ 250000 |  122
+ 500000 | 1020
+1000000 | 3069
+
+ ╭───────────────────────────────────────────────────╮
+ │------------ Largest Values Calculated ------------│
+ ├──────────────────┬───────────────┬────────────────┤
+ │   Thread Index   │ Largest c Val │ Hex of the val │
+ ├──────────────────┼───────────────┼────────────────┤
+ │ Thread:       2  │ Value:     1  │ Hex:     0001  │
+ │ Thread:       3  │ Value:     2  │ Hex:     0002  │
+ │ Thread:       5  │ Value:     3  │ Hex:     0003  │
+ │ Thread:      11  │ Value:     5  │ Hex:     0005  │
+ │ Thread:      19  │ Value:     6  │ Hex:     0006  │
+ │ Thread:      35  │ Value:     7  │ Hex:     0007  │
+ │ Thread:      47  │ Value:     8  │ Hex:     0008  │
+ │ Thread:      53  │ Value:     9  │ Hex:     0009  │
+ │ Thread:      95  │ Value:    10  │ Hex:     000A  │
+ │ Thread:     103  │ Value:    11  │ Hex:     000B  │
+ │ Thread:     179  │ Value:    12  │ Hex:     000C  │
+ │ Thread:     251  │ Value:    13  │ Hex:     000D  │
+ │ Thread:     299  │ Value:    14  │ Hex:     000E  │
+ │ Thread:     503  │ Value:    15  │ Hex:     000F  │
+ │ Thread:     743  │ Value:    16  │ Hex:     0010  │
+ │ Thread:    1019  │ Value:    17  │ Hex:     0011  │
+ │ Thread:    1319  │ Value:    18  │ Hex:     0012  │
+ │ Thread:    1439  │ Value:    19  │ Hex:     0013  │
+ │ Thread:    2939  │ Value:    20  │ Hex:     0014  │
+ │ Thread:    3359  │ Value:    21  │ Hex:     0015  │
+ │ Thread:    3959  │ Value:    22  │ Hex:     0016  │
+ │ Thread:    5387  │ Value:    24  │ Hex:     0018  │
+ │ Thread:    5879  │ Value:    26  │ Hex:     001A  │
+ │ Thread:   17747  │ Value:    28  │ Hex:     001C  │
+ │ Thread:   23399  │ Value:    34  │ Hex:     0022  │
+ │ Thread:   93596  │ Value:    35  │ Hex:     0023  │
+ │ Thread:  186479  │ Value:    37  │ Hex:     0025  │
+ │ Thread:  278387  │ Value:    38  │ Hex:     0026  │
+ │ Thread:  442679  │ Value:    39  │ Hex:     0027  │
+ │ Thread:  493919  │ Value:    42  │ Hex:     002A  │
+ │ Thread:  830939  │ Value:    43  │ Hex:     002B  │
+ ╰──────────────────┴───────────────┴────────────────╯
+
+
+ ╭───────────────────────────────────────────────────╮
+ │------------ Pierce Expansion Algorithm -----------│
+ ├───────────────────────────────────────────────────┤
+ │  This code calculates the Pierce Expansion count  │
+ │ for a given B value.                              │
+ │  The B value is the same as the thread index on   │
+ │ the table bellow.                                 │
+ ╰───────────────────────────────────────────────────╯
+ ╭───────────────────────────────────────────────────╮
+ │------------ Largest Values Calculated ------------│
+ ├──────────────────┬───────────────┬────────────────┤
+ │   Thread Index   │ Largest c Val │ Hex of the val │
+ ├──────────────────┼───────────────┼────────────────┤
+ │ Thread:       2  │ Value:     1  │ Hex:     0001  │
+ │ Thread:       3  │ Value:     2  │ Hex:     0002  │
+ │ Thread:       5  │ Value:     3  │ Hex:     0003  │
+ │ Thread:      11  │ Value:     5  │ Hex:     0005  │
+ │ Thread:      19  │ Value:     6  │ Hex:     0006  │
+ │ Thread:      35  │ Value:     7  │ Hex:     0007  │
+ │ Thread:      47  │ Value:     8  │ Hex:     0008  │
+ │ Thread:      53  │ Value:     9  │ Hex:     0009  │
+ │ Thread:      95  │ Value:    10  │ Hex:     000A  │
+ │ Thread:     103  │ Value:    11  │ Hex:     000B  │
+ │ Thread:     179  │ Value:    12  │ Hex:     000C  │
+ │ Thread:     251  │ Value:    13  │ Hex:     000D  │
+ │ Thread:     299  │ Value:    14  │ Hex:     000E  │
+ │ Thread:     503  │ Value:    15  │ Hex:     000F  │
+ │ Thread:     743  │ Value:    16  │ Hex:     0010  │
+ │ Thread:    1019  │ Value:    17  │ Hex:     0011  │
+ │ Thread:    1319  │ Value:    18  │ Hex:     0012  │
+ │ Thread:    1439  │ Value:    19  │ Hex:     0013  │
+ │ Thread:    2939  │ Value:    20  │ Hex:     0014  │
+ │ Thread:    3359  │ Value:    21  │ Hex:     0015  │
+ │ Thread:    3959  │ Value:    22  │ Hex:     0016  │
+ │ Thread:    5387  │ Value:    24  │ Hex:     0018  │
+ │ Thread:    5879  │ Value:    26  │ Hex:     001A  │
+ │ Thread:   17747  │ Value:    28  │ Hex:     001C  │
+ │ Thread:   23399  │ Value:    34  │ Hex:     0022  │
+ │ Thread:   93596  │ Value:    35  │ Hex:     0023  │
+ │ Thread:  186479  │ Value:    37  │ Hex:     0025  │
+ │ Thread:  278387  │ Value:    38  │ Hex:     0026  │
+ │ Thread:  442679  │ Value:    39  │ Hex:     0027  │
+ │ Thread:  493919  │ Value:    42  │ Hex:     002A  │
+ ╰──────────────────┴───────────────┴────────────────╯
+ ╭───────────────────────────────────────────────────╮
+ │--------------------- Results ---------------------│
+ ├───────────────────────────────────────────────────┤
+ │   Largest C value:                           42   │
+ │   Largest value at B:                    493919   │
+ │   Time used:                              1020s   │
+ ├───────────────────────────────────────────────────┤
+ │   Number of Iterations:         1954 iterations   │
+ │   Number of Threads/Iteration:      256 threads   │
+ │   Number of Total Threads used:  500224 threads   │
+ ╰───────────────────────────────────────────────────╯
