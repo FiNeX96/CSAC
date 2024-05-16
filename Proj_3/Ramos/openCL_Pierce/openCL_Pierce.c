@@ -1,7 +1,7 @@
 //
 // Tomás Oliveira e Silva,  February 2018
 //
-// Hello world program in OpenCL
+// Hello world program
 //
 // What it does:
 //   the OpenCL kernel initializes an array with the string "Hello, world!"
@@ -306,7 +306,7 @@ int main(int argc, char **argv) {
         toc = time(NULL);
         diff = (toc - tic);
         totaltime += diff;
-        printf(" │ \033[0;32mThread:\033[0;33m %8d\033[0;37m │ \033[0;32mValue:\033[0;33m %6d\033[0;37m │ \033[0;32mTime:\033[0;33m %7ds \033[0;37m│\n", currThread, host_buffer[i], diff);
+        printf(" │ \033[0;32mThread:\033[0;33m %8d\033[0;37m │ \033[0;32mValue:\033[0;33m %6d\033[0;37m │ \033[0;32mTime:\033[0;33m %7lds \033[0;37m│\n", currThread, host_buffer[i], diff);
         tic = toc;
       }
 
@@ -321,9 +321,9 @@ int main(int argc, char **argv) {
   printf(" ╭───────────────────────────────────────────────────╮\n");
   printf(" │--------------------- \033[0;36mResults\033[0;37m ---------------------│\n");
   printf(" ├───────────────────────────────────────────────────┤\n");
-  printf(" │ \033[0;32mLargest C value:   \033[0;33m                          %4d \033[0;37m│\n", largestC);
-  printf(" │ \033[0;32mLargest value at B:\033[0;33m                       %7d \033[0;37m│\n", largestB);
-  printf(" │ \033[0;32mTime used:         \033[0;33m                      %7lds \033[0;37m│\n", totaltime);
+  printf(" │ \033[0;32mLargest C value:              \033[0;33m               %4d \033[0;37m│\n", largestC);
+  printf(" │ \033[0;32mLargest value found at B:     \033[0;33m            %7d \033[0;37m│\n", largestB);
+  printf(" │ \033[0;32mTotal Time used:              \033[0;33m           %7lds \033[0;37m│\n", totaltime);
   printf(" ├───────────────────────────────────────────────────┤\n");
   printf(" │ \033[0;32mNumber of Iterations:         \033[0;33m   %5d iterations \033[0;37m│\n", iter);
   printf(" │ \033[0;32mNumber of Threads/Iteration:  \033[0;33m       %4d threads \033[0;37m│\n", (int)thread_count);
