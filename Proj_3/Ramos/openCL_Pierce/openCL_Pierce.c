@@ -173,7 +173,7 @@ int main(int argc, char **argv) {
   cl_uint num_platforms;
   cl_platform_id platform_id[1];
 
-  cl_call( clGetPlatformIDs , (1,&platform_id[0],&num_platforms) );
+  cl_call(clGetPlatformIDs, (1,&platform_id[0],&num_platforms) );
   if(num_platforms < 1) {
     fprintf(stderr,"No OpenCL platform\n");
     exit(1);
@@ -187,7 +187,7 @@ int main(int argc, char **argv) {
   cl_uint num_devices;
   cl_device_id device_id[1];
 
-  cl_call( clGetDeviceIDs , (platform_id[0],CL_DEVICE_TYPE_DEFAULT,1,&device_id[0],&num_devices) );
+  cl_call(clGetDeviceIDs, (platform_id[0],CL_DEVICE_TYPE_DEFAULT,1,&device_id[0],&num_devices) );
   if(num_devices < 1) {
     fprintf(stderr,"No OpenCL device\n");
     exit(1);
@@ -200,19 +200,20 @@ int main(int argc, char **argv) {
   //
   cl_context context;
 
-  cl_call_alt( context = clCreateContext , (NULL,1,&device_id[0],NULL,NULL,&e) );
+  cl_call_alt(context = clCreateContext, (NULL,1,&device_id[0],NULL,NULL,&e) );
 
   //
   // create an OpenCL command queue
   //
   cl_command_queue command_queue;
 
-  cl_call_alt( command_queue = clCreateCommandQueue, (context,device_id[0],0,&e) );
+  cl_call_alt(command_queue = clCreateCommandQueue, (context,device_id[0],0,&e) );
 
 
   size_t thread_count;
-  cl_call( clGetDeviceInfo , (device_id[0],CL_DEVICE_MAX_WORK_GROUP_SIZE,sizeof(thread_count),(void *)&thread_count,NULL) );
-
+  cl_call(clGetDeviceInfo, (device_id[0],CL_DEVICE_MAX_WORK_GROUP_SIZE,sizeof(thread_count),(void *)&thread_count,NULL) );
+  cl_call(clGetDeviceInfo, (device_id[0],CL_DEVICE_MAX_WORK_GROUP_SIZE,sizeof(thread_count),(void *)&thread_count,NULL) );
+  thread_count*=128;
   int maxIter = (maxB / thread_count) + 1;
 
   //
@@ -223,7 +224,7 @@ int main(int argc, char **argv) {
   int buffer_size;
 
   buffer_size = (int)sizeof(host_buffer);
-  cl_call_alt( device_buffer = clCreateBuffer, (context,CL_MEM_READ_WRITE,(size_t)buffer_size,NULL,&e) );
+  cl_call_alt(device_buffer = clCreateBuffer, (context,CL_MEM_READ_WRITE,(size_t)buffer_size,NULL,&e) );
 
   //
   // transfer the OpenCL code to the OpenCL context
@@ -234,15 +235,15 @@ int main(int argc, char **argv) {
 
   program_lines[0] = &open_cl_source_code[0];
   program_line_lengths[0] = open_cl_source_code_size;
-  cl_call_alt( program = clCreateProgramWithSource, (context,1,(const char **)&program_lines[0],&program_line_lengths[0],&e) );
+  cl_call_alt(program = clCreateProgramWithSource, (context,1,(const char **)&program_lines[0],&program_line_lengths[0],&e) );
 
   //
   // compile the OpenCL code and get the pierce() kernel handle
   //
   cl_kernel kernel;
 
-  cl_call( clBuildProgram , (program,1,&device_id[0],NULL,NULL,NULL) );
-  cl_call_alt( kernel = clCreateKernel , (program,"pierce",&e) );
+  cl_call(clBuildProgram, (program,1,&device_id[0],NULL,NULL,NULL) );
+  cl_call_alt(kernel = clCreateKernel, (program,"pierce",&e) );
 
 
 
@@ -276,40 +277,43 @@ int main(int argc, char **argv) {
   time_t tic, toc;
   tic = time(NULL);
 
-  for (; iter < maxIter; iter++) {
-    size_t total_work_size[1],local_work_size[1]; // number of threads
-    cl_event pierce_kernel_done[1];
+  size_t total_work_size[1], local_work_size[1]; // number of threads
+  cl_event pierce_kernel_done[1];
 
-    cl_call( clSetKernelArg , (kernel,0,sizeof(cl_mem),(void *)&device_buffer) );
-    cl_call( clSetKernelArg , (kernel,1,sizeof(int),&buffer_size) );
-    cl_call( clSetKernelArg , (kernel,2,sizeof(int),&iter) );
-    cl_call( clSetKernelArg , (kernel,3,sizeof(int),&thread_count) );
+  for (; iter < maxIter; iter++) {
+
+    cl_call(clSetKernelArg, (kernel,0,sizeof(cl_mem),(void *)&device_buffer) );
+    cl_call(clSetKernelArg, (kernel,1,sizeof(int),&buffer_size) );
+    cl_call(clSetKernelArg, (kernel,2,sizeof(int),&iter) );
+    cl_call(clSetKernelArg, (kernel,3,sizeof(int),&thread_count) );
 
     total_work_size[0] = (size_t)buffer_size; // the total number of threads (one dimension)
-    local_work_size[0] = (size_t)buffer_size; // the number of threads in each work group (in this small example, all of them)
-    cl_call( clEnqueueNDRangeKernel , (command_queue,kernel,1,NULL,&total_work_size[0],&local_work_size[0],0,NULL,&pierce_kernel_done[0]) );
+    local_work_size[0] = (size_t)256; // the number of threads in each work group (in this small example, all of them)
+    cl_call(clEnqueueNDRangeKernel, (command_queue,kernel,1,NULL,&total_work_size[0],&local_work_size[0],0,NULL,&pierce_kernel_done[0]) );
 
     //
     // copy the buffer form device memory to CPU memory (copy only after the kernel has finished and block host execution until the copy is completed)
     //
-    cl_call( clEnqueueReadBuffer , (command_queue,device_buffer,CL_TRUE,0,(size_t)buffer_size,(void *)host_buffer,1,&pierce_kernel_done[0],NULL) );
+    cl_call(clEnqueueReadBuffer, (command_queue,device_buffer,CL_TRUE,0,(size_t)buffer_size,(void *)host_buffer,1,&pierce_kernel_done[0],NULL) );
   
     //
     // display host_buffer
     //
     for(i = 0; i < buffer_size / sizeof(char); i++) {
-      unsigned int currThread = i + iter*thread_count;
+      unsigned int currThread = i + iter * thread_count;
 
       if (host_buffer[i] > largestC && currThread < maxB) {
         largestC = host_buffer[i];
         largestB = currThread;
+
         toc = time(NULL);
         diff = (toc - tic);
         totaltime += diff;
+        
         printf(" │ \033[0;32mThread:\033[0;33m %8d\033[0;37m │ \033[0;32mValue:\033[0;33m %6d\033[0;37m │ \033[0;32mTime:\033[0;33m %7lds \033[0;37m│\n", currThread, host_buffer[i], diff);
+        
         tic = toc;
       }
-
     }
   }
 
@@ -325,21 +329,21 @@ int main(int argc, char **argv) {
   printf(" │ \033[0;32mLargest value found at B:     \033[0;33m            %7d \033[0;37m│\n", largestB);
   printf(" │ \033[0;32mTotal Time used:              \033[0;33m           %7lds \033[0;37m│\n", totaltime);
   printf(" ├───────────────────────────────────────────────────┤\n");
-  printf(" │ \033[0;32mNumber of Iterations:         \033[0;33m   %5d iterations \033[0;37m│\n", iter);
-  printf(" │ \033[0;32mNumber of Threads/Iteration:  \033[0;33m       %4d threads \033[0;37m│\n", (int)thread_count);
-  printf(" │ \033[0;32mNumber of Total Threads used: \033[0;33m    %7d threads \033[0;37m│\n", iter * (int)thread_count);
+  printf(" │ \033[0;32mNumber of Iterations:         \033[0;33m %7d iterations \033[0;37m│\n", iter);
+  printf(" │ \033[0;32mNumber of Threads/Iteration:  \033[0;33m %10d threads \033[0;37m│\n", (int)thread_count);
+  printf(" │ \033[0;32mNumber of Total Threads used: \033[0;33m %10d threads \033[0;37m│\n", iter * (int)thread_count);
   printf(" ╰───────────────────────────────────────────────────╯\n\n");
 
   //
   // clean up (optional)
   //
-  cl_call( clFlush , (command_queue) );
-  cl_call( clFinish , (command_queue) );
-  cl_call( clReleaseKernel , (kernel) );
-  cl_call( clReleaseProgram , (program) );
-  cl_call( clReleaseMemObject , (device_buffer) );
-  cl_call( clReleaseCommandQueue , (command_queue) );
-  cl_call( clReleaseContext , (context) );
+  cl_call(clFlush, (command_queue) );
+  cl_call(clFinish, (command_queue) );
+  cl_call(clReleaseKernel, (kernel) );
+  cl_call(clReleaseProgram, (program) );
+  cl_call(clReleaseMemObject, (device_buffer) );
+  cl_call(clReleaseCommandQueue, (command_queue) );
+  cl_call(clReleaseContext, (context) );
 
   //
   // all done!

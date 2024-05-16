@@ -7,7 +7,7 @@
 //
 
 __kernel
-//__attribute__((work_group_size_hint(128,1,1)))
+//__attribute__((work_group_size_hint(256,1,1)))
 void pierce(__global char *buffer, int buffer_size, unsigned int iter, unsigned int thread_count) {
 
   size_t idx = get_global_id(0);
