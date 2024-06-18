@@ -158,7 +158,7 @@ int main(void)
   // for all n (but avoid very small values of n)
   printf("#  n     IJK            IKJ            JIK            JKI            KIJ            KJI\n");
   printf("#--- ------- ------ ------- ------ ------- ------ ------- ------ ------- ------ ------- ------\n");
-  for(n = 16 * 0 + N - 4;n <= N;n++)
+  for(n = 16;n <= N;n++)
   {
     fprintf(stderr,"%d\r",n);
     // for each multiplication function

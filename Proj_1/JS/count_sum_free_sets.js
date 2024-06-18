@@ -12,7 +12,7 @@ function main() {
             count[i] += count[i-1];
         }
     }
-    console.log("#", current_max, count[current_max]);
+    console.log("#", current_max, count[current_max], end-start, "ms", );
 }
 
 function recurse(first_try, size) {
