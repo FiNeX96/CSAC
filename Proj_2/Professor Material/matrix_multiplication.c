@@ -1,5 +1,5 @@
 //
-// Tomás Oliveira e Silva,   February 2024
+// Tomï¿½s Oliveira e Silva,   February 2024
 //
 // measure the time it takes to multiply two NxN matrices using three different matrix data layouts
 //
@@ -14,7 +14,7 @@
 //
 
 #ifndef N_LOG2
-# define N_LOG2  10
+# define N_LOG2  9
 #endif
 #define N  (1 << N_LOG2)
 
