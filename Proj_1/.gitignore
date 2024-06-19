@@ -65,7 +65,8 @@ dkms.conf
 
 # Results
 
-*_v1_plain.txt
-*_v1_threads.txt
-*_v2_plain.txt
-*_v3_plain.txt
+# *_v1_plain.txt
+# *_v1_threads.txt
+# *_v2_plain.txt
+# *_v3_plain.txt
+# *_v1_python.txt
