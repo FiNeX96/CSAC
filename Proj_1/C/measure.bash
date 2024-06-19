@@ -1,14 +1,15 @@
 #!/bin/bash
 set -e
 
-# Get the number of iterations and identifier from the user, set defaults if not provided
-cpu_name=${1:-""}
-num_iterations=${2:-70}
-
-if [ -z "$cpu_name" ]; then
-  # Get the CPU name and remove anything inside ( )
-  cpu_name=$(lscpu | sed -nr '/Model name/ s/.*:\s*(.*) @ .*/\1/p' | sed -e 's/[(][^)]*[)]//g' -e 's/[()]//g')
+# Check if cpu_name is provided
+if [ -z "$1" ]; then
+    echo "Usage: $0 \"<cpu_name>\" [num_iterations]"
+    exit 1
 fi
+
+# Get the number of iterations and identifier from the user, set defaults if not provided
+cpu_name=$1
+num_iterations=${2:-70}
 
 # Make it lower case, squeeze the spaces and turn them into underscores
 cpu_name=$(echo "$cpu_name" | tr '[:upper:]' '[:lower:]' | tr -s ' ' | tr ' ' '_')
@@ -23,15 +24,15 @@ for n in $(seq -w 01 $num_iterations); do
   line=$(./a.out | grep '^#' | cut -c3-)
 
   if [ "$n" -eq 01 ]; then
-    echo "$line" > "exec_times/${cpu_name}_v1_plain.txt"
+    echo "$line" > "../exec_times/C/v1_plain/${cpu_name}_v1_plain.txt"
   else
-    echo "$line" >> "exec_times/${cpu_name}_v1_plain.txt"
+    echo "$line" >> "../exec_times/C/v1_plain/${cpu_name}_v1_plain.txt"
   fi
 
   rm -f a.out
 done
 
-./process_execution_time_file.bash "exec_times/${cpu_name}_v1_plain.txt"
+./process_execution_time_file.bash "../exec_times/C/v1_plain/${cpu_name}_v1_plain.txt"
 
 # Compile and run for v1_threads.c
 for n in $(seq -w 01 $num_iterations); do
@@ -40,15 +41,15 @@ for n in $(seq -w 01 $num_iterations); do
   line=$(./a.out | grep '^#' | cut -c3-)
 
   if [ "$n" -eq 01 ]; then
-    echo "$line" > "exec_times/${cpu_name}_v1_threads.txt"
+    echo "$line" > "../exec_times/C/v1_threads/${cpu_name}_v1_threads.txt"
   else
-    echo "$line" >> "exec_times/${cpu_name}_v1_threads.txt"
+    echo "$line" >> "../exec_times/C/v1_threads/${cpu_name}_v1_threads.txt"
   fi
 
   rm -f a.out
 done
 
-./process_execution_time_file.bash "exec_times/${cpu_name}_v1_threads.txt"
+./process_execution_time_file.bash "../exec_times/C/v1_threads/${cpu_name}_v1_threads.txt"
 
 # Compile and run for v2_plain.c
 for n in $(seq -w 01 $num_iterations); do
@@ -57,15 +58,15 @@ for n in $(seq -w 01 $num_iterations); do
   line=$(./a.out | grep '^#' | cut -c3-)
 
   if [ "$n" -eq 01 ]; then
-    echo "$line" > "exec_times/${cpu_name}_v2_plain.txt"
+    echo "$line" > "../exec_times/C/v2_plain/${cpu_name}_v2_plain.txt"
   else
-    echo "$line" >> "exec_times/${cpu_name}_v2_plain.txt"
+    echo "$line" >> "../exec_times/C/v2_plain/${cpu_name}_v2_plain.txt"
   fi
 
   rm -f a.out
 done
 
-./process_execution_time_file.bash "exec_times/${cpu_name}_v2_plain.txt"
+./process_execution_time_file.bash "../exec_times/C/v2_plain/${cpu_name}_v2_plain.txt"
 
 # Compile and run for v3_plain.c
 for n in $(seq -w 01 $num_iterations); do
@@ -74,12 +75,12 @@ for n in $(seq -w 01 $num_iterations); do
   line=$(./a.out | grep '^#' | cut -c3-)
 
   if [ "$n" -eq 01 ]; then
-    echo "$line" > "exec_times/${cpu_name}_v3_plain.txt"
+    echo "$line" > "../exec_times/C/v3_plain/${cpu_name}_v3_plain.txt"
   else
-    echo "$line" >> "exec_times/${cpu_name}_v3_plain.txt"
+    echo "$line" >> "../exec_times/C/v3_plain/${cpu_name}_v3_plain.txt"
   fi
 
   rm -f a.out
 done
 
-./process_execution_time_file.bash "exec_times/${cpu_name}_v3_plain.txt"
+./process_execution_time_file.bash "../exec_times/C/v3_plain/${cpu_name}_v3_plain.txt"
