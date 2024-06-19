@@ -16,3 +16,69 @@ Na On-Line Encyclopedia of Integer Sequences as contagens que pretendemos estão
     Os ficheiros incluem algum código fonte e também dados sobre tempos de execução do código fonte fornecido  em alguns modelos de processador. Nesses ficheiros (do tipo .txt) na primeira coluna mostra-se o valor de n, na segunda mostra-se o número de sub-conjuntos livre de somas, na terceira mostra-se o tempo de execução (somando os tempos gastos em todos os cores), e na quarta mostra-se o tempo de execução real (o chamado wall-clock time).
 
     Web assembly compila-se, depois de instalar as ferramentas de desenvolvimento, com algo do género "emcc -Wall -O2 a.c -o a.html"; são gerados três ficheiros: a.html, a.js e a.wasm. É possível testar localmente arrancando no web server local, com algo do género "busybox httpd -p 127.0.0.1:8080 -h /run/user/1000/tmp/" (neste exemplo os ficheiros foram guardados em /run/user/1000/tmp).
+
+### Como executar cada linguagem
+
+#### C
+Version 1 (all from 1 to n):
+```
+cd C/version1
+make clean v1_plain_all
+./v1_plain_all
+```
+
+Version 2, 3 and threads:
+```
+cd C/versionX
+make clean vX
+./vX
+```
+
+#### Bash
+```
+cd Bash
+chmod u+x count_sum_free_sets_v1_plain.sh
+./count_sum_free_sets_v1_plain.sh
+```
+
+#### Crystal
+```
+cd Crystal
+crystal count_sum_free_sets_v1_plain.cr
+```
+
+#### GO
+```
+cd GO
+go run ./sum_free_sets.go
+```
+
+#### Java
+```
+cd Java
+javac Main/*.java
+java Main/Main
+```
+
+#### Javascript
+```
+cd JS
+node count_sum_free_sets.js
+```
+
+#### Python
+```
+cd Python
+python count_sum_free_sets.py
+```
+
+#### WebAssembly
+```
+cd WebAssembly
+
+```
+
+#### Scratch
+```
+import the .sb3 into the scratch web environment and execute it
+```

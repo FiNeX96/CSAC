@@ -18,7 +18,7 @@
 //
 
 #ifndef max_n
-# define max_n 50
+# define max_n 60
 #endif
 
 

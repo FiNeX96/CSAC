@@ -13,7 +13,7 @@
 #include "elapsed_time.h"
 
 #ifndef max_n
-# define max_n 50
+# define max_n 60
 #endif
 
 static unsigned long count[1 + max_n]; // the number of subsets (indexed by its last element)

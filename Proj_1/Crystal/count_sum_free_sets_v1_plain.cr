@@ -1,4 +1,4 @@
-MAX_N = 60
+MAX_N = 50
 
 struct State_t
     @a : Array(Int32)
