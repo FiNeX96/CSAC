@@ -213,7 +213,7 @@ int main(int argc, char **argv) {
   size_t thread_count;
   cl_call(clGetDeviceInfo, (device_id[0],CL_DEVICE_MAX_WORK_GROUP_SIZE,sizeof(thread_count),(void *)&thread_count,NULL) );
   cl_call(clGetDeviceInfo, (device_id[0],CL_DEVICE_MAX_WORK_GROUP_SIZE,sizeof(thread_count),(void *)&thread_count,NULL) );
-  thread_count*=128;
+  thread_count *= 128;
   int maxIter = (maxB / thread_count) + 1;
 
   //

@@ -1,4 +1,4 @@
-let MAX_N = 40;
+let MAX_N = 60;
 let current_max, count, sum_count, numbers;
 
 
