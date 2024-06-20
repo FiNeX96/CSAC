@@ -1,12 +1,10 @@
 from time import time
-
+import sys
 
 MAX_N = 50
 a = []
 sum_count = []
 count = []
-
-
 
 def recurse(first_try: int, set_size: int):
     while first_try <= temp_max:
@@ -50,10 +48,18 @@ def main():
     # with open("count_sum_free_sets.txt", "a+") as file:
     #     file.write(f"{temp_max} {count[temp_max]} {total_time:e} seconds\n")
     # Print to console
-    print(f"{temp_max} {count[i]} {total_time:e} seconds")
+    print(f"{temp_max} {count[i]} {total_time:.6f} {int(total_time)}")
     
 if __name__ == "__main__":
     global temp_max
+
+    if len(sys.argv) > 1:
+        try: 
+            MAX_N = int(sys.argv[1])
+        except ValueError: 
+            print("argument must be an integer")
+            exit()
+
     for i in range(1, MAX_N+1):
         temp_max = i
         main()
