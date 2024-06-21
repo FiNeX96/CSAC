@@ -63,6 +63,10 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
+# Java
+
+*.class
+
 # Results
 
 # *_v1_plain.txt
