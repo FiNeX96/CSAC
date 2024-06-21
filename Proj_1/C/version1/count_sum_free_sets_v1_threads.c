@@ -28,7 +28,7 @@
 # define max_n           60
 #endif
 #ifndef n_threads
-# define n_threads        16
+# define n_threads        14
 #endif
 #ifndef split_n
 # define split_n          8
