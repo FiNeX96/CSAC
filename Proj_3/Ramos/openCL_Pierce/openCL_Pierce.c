@@ -213,7 +213,7 @@ int main(int argc, char **argv) {
   size_t thread_count;
   cl_call(clGetDeviceInfo, (device_id[0],CL_DEVICE_MAX_WORK_GROUP_SIZE,sizeof(thread_count),(void *)&thread_count,NULL) );
   cl_call(clGetDeviceInfo, (device_id[0],CL_DEVICE_MAX_WORK_GROUP_SIZE,sizeof(thread_count),(void *)&thread_count,NULL) );
-  thread_count *= 128;
+  thread_count *= 64;
   int maxIter = (maxB / thread_count) + 1;
 
   //
@@ -311,8 +311,11 @@ int main(int argc, char **argv) {
         totaltime += diff;
         
         printf(" │ \033[0;32mThread:\033[0;33m %8d\033[0;37m │ \033[0;32mValue:\033[0;33m %6d\033[0;37m │ \033[0;32mTime:\033[0;33m %7lds \033[0;37m│\n", currThread, host_buffer[i], diff);
-        
         tic = toc;
+      }
+      else if (currThread % 100 == 0) {
+        printf(" │ \033[0;32mCurrent thread:\033[0;33m %8d\033[0;37m │\n", currThread);
+        printf("\033[A\r");
       }
     }
   }

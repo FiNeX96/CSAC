@@ -1,0 +1,55 @@
+ ╭───────────────────────────────────────────────────╮
+ │------------ Pierce Expansion Algorithm -----------│
+ ├───────────────────────────────────────────────────┤
+ │  This code calculates the Pierce Expansion count  │
+ │ for a given B value.                              │
+ │  The B value is the same as the thread index on   │
+ │ the table bellow.                                 │
+ ╰───────────────────────────────────────────────────╯
+ ╭───────────────────────────────────────────────────╮
+ │------------ Largest Values Calculated ------------│
+ ├──────────────────┬───────────────┬────────────────┤
+ │ Thread Index (b) │ Largest c Val │  Time to find  │
+ ├──────────────────┼───────────────┼────────────────┤
+ │ Thread:        2 │ Value:      1 │ Time:       0s │
+ │ Thread:        3 │ Value:      2 │ Time:       0s │
+ │ Thread:        5 │ Value:      3 │ Time:       0s │
+ │ Thread:       11 │ Value:      5 │ Time:       0s │
+ │ Thread:       19 │ Value:      6 │ Time:       0s │
+ │ Thread:       35 │ Value:      7 │ Time:       0s │
+ │ Thread:       47 │ Value:      8 │ Time:       0s │
+ │ Thread:       53 │ Value:      9 │ Time:       0s │
+ │ Thread:       95 │ Value:     10 │ Time:       0s │
+ │ Thread:      103 │ Value:     11 │ Time:       0s │
+ │ Thread:      179 │ Value:     12 │ Time:       0s │
+ │ Thread:      251 │ Value:     13 │ Time:       0s │
+ │ Thread:      299 │ Value:     14 │ Time:       0s │
+ │ Thread:      503 │ Value:     15 │ Time:       0s │
+ │ Thread:      743 │ Value:     16 │ Time:       0s │
+ │ Thread:     1019 │ Value:     17 │ Time:       0s │
+ │ Thread:     1319 │ Value:     18 │ Time:       0s │
+ │ Thread:     1439 │ Value:     19 │ Time:       0s │
+ │ Thread:     2939 │ Value:     20 │ Time:       0s │
+ │ Thread:     3359 │ Value:     21 │ Time:       0s │
+ │ Thread:     3959 │ Value:     22 │ Time:       0s │
+ │ Thread:     5387 │ Value:     24 │ Time:       0s │
+ │ Thread:     5879 │ Value:     26 │ Time:       0s │
+ │ Thread:    17747 │ Value:     28 │ Time:       0s │
+ │ Thread:    23399 │ Value:     34 │ Time:       0s │
+ │ Thread:    93596 │ Value:     35 │ Time:       3s │
+ │ Thread:   186479 │ Value:     37 │ Time:       5s │
+ │ Thread:   278387 │ Value:     38 │ Time:      16s │
+ │ Thread:   442679 │ Value:     39 │ Time:      26s │
+ │ Thread:   493919 │ Value:     42 │ Time:      17s │
+ ╰──────────────────┴───────────────┴────────────────╯
+ ╭───────────────────────────────────────────────────╮
+ │--------------------- Results ---------------------│
+ ├───────────────────────────────────────────────────┤
+ │ Largest C value:                               42 │
+ │ Largest value found at B:                  493919 │
+ │ Total Time used:                              67s │
+ ├───────────────────────────────────────────────────┤
+ │ Number of Iterations:                8 iterations │
+ │ Number of Threads/Iteration:        65536 threads │
+ │ Number of Total Threads used:      524288 threads │
+ ╰───────────────────────────────────────────────────╯
