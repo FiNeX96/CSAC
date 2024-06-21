@@ -20,7 +20,8 @@ cc -Wall -O2 -Wextra -Wundef ../align_columns.c -o align_columns
 # Compile and run for v1_plain.c
 for n in $(seq -w 01 $num_iterations); do
 
-  line=$(MAX_N=${n} cargo run --quiet --release | grep '^#' | cut -c3-)
+  MAX_N=${n} cargo build --release --quiet
+  line=$(./target/release/count_sum_free_sets_rust | grep '^#' | cut -c3-)
 
   if [ "$n" -eq 01 ]; then
     echo "$line" > "../exec_times/Rust/${cpu_name}_v1_rust.txt"
