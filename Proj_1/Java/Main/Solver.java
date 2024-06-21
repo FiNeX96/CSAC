@@ -43,6 +43,6 @@ public class Solver {
             }
         }
     
-        System.out.printf("# %d %d %6.3e seconds\n", globals.temp_n, state.count[globals.temp_n], (double)total_time / 1000000000);
+        System.out.printf("%d %d %.6f %d\n", globals.temp_n, state.count[globals.temp_n], (double)total_time / 1000000000, total_time / 1000000000);
     }
 }
