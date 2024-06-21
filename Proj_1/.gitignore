@@ -67,6 +67,11 @@ dkms.conf
 
 *.class
 
+# Rust
+
+Cargo.lock
+target/
+
 # Results
 
 # *_v1_plain.txt
