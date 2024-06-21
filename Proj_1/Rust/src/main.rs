@@ -5,9 +5,9 @@ include!("max_n.rs");
 
 // global computation state
 struct State {
-    a: [i32; MAX_N],                   // the set elements
+    a: [usize; MAX_N],                   // the set elements
     sum_count: [usize; 2 * MAX_N + 1], // the number of times a_i+a_j has been observed
-    count: [u64; 1 + MAX_N],           // the number of subsets (indexed by its last element)
+    count: [usize; 1 + MAX_N],           // the number of subsets (indexed by its last element)
 }
 
 fn recurse(first_to_try: usize, set_size: usize, state: &mut State) {
@@ -17,16 +17,16 @@ fn recurse(first_to_try: usize, set_size: usize, state: &mut State) {
             // count it
             state.count[i] += 1;
             // update the set elements
-            state.a[set_size] = i as i32;
+            state.a[set_size] = i;
             // count new sums
             for j in 0..=set_size {
-                state.sum_count[state.a[j] as usize + i] += 1;
+                state.sum_count[state.a[j] + i] += 1;
             }
             // try one more
             recurse(i + 1, set_size + 1, state);
             // uncount sums
             for j in 0..=set_size {
-                state.sum_count[state.a[j] as usize + i] -= 1;
+                state.sum_count[state.a[j] + i] -= 1;
             }
         }
     }
