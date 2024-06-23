@@ -1,18 +1,21 @@
-let MAX_N = 60;
+// Get the command line argument for MAX_N, defaulting to 60 if not provided
+const MAX_N = process.argv[2] ? parseInt(process.argv[2], 10) : 60;
+
 let current_max, count, sum_count, numbers;
 
-
 function main() {
-    let start = Date.now();
-    recurse(1,0)
-    let end = Date.now();
+    const start = Date.now();
+    recurse(1, 0);
+    const end = Date.now();
+    const totalTimeSec = (end - start) / 1000;
+    const totalTimeSecInt = Math.floor(totalTimeSec);
 
     for (let i=0; i<=current_max; i++) {
         if (i>0) {
             count[i] += count[i-1];
         }
     }
-    console.log("#", current_max, count[current_max], end-start, "ms", );
+    console.log(`${current_max} ${count[current_max]} ${totalTimeSec.toFixed(6)} ${totalTimeSecInt}`);
 }
 
 function recurse(first_try, size) {
@@ -34,11 +37,11 @@ function recurse(first_try, size) {
 for (let i = 1; i <= MAX_N; i++) {
     current_max = i;
     numbers = new Array(i);
-    sum_count = new Array(2*i + 1);
+    sum_count = new Array(2 * i + 1);
     count = new Array(i + 1);
     numbers.fill(0);
     sum_count.fill(0);
-    count.fill(0);    
+    count.fill(0);
     count[0] = 1;
     main();
 }
