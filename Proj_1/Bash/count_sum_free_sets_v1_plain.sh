@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MAX_N=40
+MAX_N=${1:-35}
 a=()
 sum_count=()
 count=()
@@ -41,13 +41,13 @@ run_solver() {
     for ((c=0;c<=($temp_max*2);c++)); do sum_count[$c]=0; done
     for ((d=0;d<=$temp_max;d++)); do a[$d]=0; done
 
-    start_time=$(($(date +%s%N)/1000000))
+    start_time=$(date +%s.%N)
     recursive 1 0 $temp_max
-    end_time=$(($(date +%s%N)/1000000))
-    total_time=$(echo "$end_time - $start_time" | bc)
+    end_time=$(date +%s.%N)
+    total_time=$(echo "$end_time - $start_time" | bc -l)
+    total_time_int=$(printf "%.0f" "$total_time")
 
-    printf "# %d %d %6.3e\n" "$temp_max" "${count[temp_max]}" "$(($total_time/1000))"
-
+    printf "%d %d %.6f %d\n" "$temp_max" "${count[temp_max]}" "$total_time" "$total_time_int"
 }
 
 for ((n=1; n<=MAX_N; n++)); do
