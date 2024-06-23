@@ -1,5 +1,5 @@
 //
-// Tomás Oliveira e Silva,  March 2024
+// Tomás Oliveira e Silva, March 2024
 //
 // measure the bandwidth and latency of memory accesses (affected by TLB updates...)
 //
